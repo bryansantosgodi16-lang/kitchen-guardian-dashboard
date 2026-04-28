@@ -1,35 +1,29 @@
-import type { ActuatorState } from "@/hooks/useKitchenMonitor";
+import type { Actuator } from "@/services/api";
 import { Fan, Flame, Droplet, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const iconFor = (id: string) => {
-  switch (id) {
-    case "vent": return Fan;
-    case "gas_valve": return Flame;
-    case "water_pump": return Droplet;
-    case "power": return Zap;
-    default: return Zap;
-  }
+  if (id.includes("vent")) return Fan;
+  if (id.includes("gas")) return Flame;
+  if (id.includes("water") || id.includes("pump") || id.includes("bomba")) return Droplet;
+  if (id.includes("power") || id.includes("energia")) return Zap;
+  return Zap;
 };
 
 export function ActuatorCard({
   actuator,
   onToggle,
+  disabled,
 }: {
-  actuator: ActuatorState;
+  actuator: Actuator;
   onToggle: (id: string) => void;
+  disabled?: boolean;
 }) {
   const Icon = iconFor(actuator.id);
-  // Button color logic:
-  // - If active: button lets user deactivate. Red if turning off a "safe ON" system (ventilation), otherwise red for stopping.
-  // - Keep the visual: green action buttons for safe activations, red for deactivation of safe systems & dangerous ones.
   const danger = actuator.dangerWhenActive && actuator.active;
-  const safeActive = !actuator.dangerWhenActive && actuator.active;
 
   let btnClass = "bg-success/15 hover:bg-success/25 text-success border-success/30";
   if (danger) btnClass = "bg-danger/20 hover:bg-danger/30 text-danger border-danger/40";
-  else if (safeActive) btnClass = "bg-success/15 hover:bg-success/25 text-success border-success/30";
-  else if (!actuator.active) btnClass = "bg-success/15 hover:bg-success/25 text-success border-success/30";
 
   const stateLabel = actuator.active ? actuator.activeLabel : actuator.inactiveLabel;
   const stateColor = actuator.active
@@ -53,8 +47,9 @@ export function ActuatorCard({
       </div>
       <button
         onClick={() => onToggle(actuator.id)}
+        disabled={disabled}
         className={cn(
-          "w-full rounded-md border px-3 py-2 text-xs font-semibold tracking-wider transition-colors",
+          "w-full rounded-md border px-3 py-2 text-xs font-semibold tracking-wider transition-colors disabled:opacity-50 disabled:cursor-not-allowed",
           btnClass,
         )}
       >
