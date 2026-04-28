@@ -1,12 +1,14 @@
 import type { Actuator } from "@/services/api";
-import { Fan, Flame, Droplet, Zap } from "lucide-react";
+import { Fan, Flame, Droplet, Zap, Thermometer } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const iconFor = (id: string) => {
-  if (id.includes("vent")) return Fan;
-  if (id.includes("gas")) return Flame;
-  if (id.includes("water") || id.includes("pump") || id.includes("bomba")) return Droplet;
-  if (id.includes("power") || id.includes("energia")) return Zap;
+const iconFor = (id: string, name: string) => {
+  const k = `${id} ${name}`.toLowerCase();
+  if (k.includes("vent")) return Fan;
+  if (k.includes("gas") || k.includes("gás")) return Flame;
+  if (k.includes("water") || k.includes("pump") || k.includes("bomba") || k.includes("água")) return Droplet;
+  if (k.includes("calor") || k.includes("heat") || k.includes("temp")) return Thermometer;
+  if (k.includes("power") || k.includes("energia") || k.includes("tomada")) return Zap;
   return Zap;
 };
 
@@ -19,29 +21,39 @@ export function ActuatorCard({
   onToggle: (id: string) => void;
   disabled?: boolean;
 }) {
-  const Icon = iconFor(actuator.id);
-  const danger = actuator.dangerWhenActive && actuator.active;
+  const Icon = iconFor(actuator.id, actuator.name);
 
-  let btnClass = "bg-success/15 hover:bg-success/25 text-success border-success/30";
-  if (danger) btnClass = "bg-danger/20 hover:bg-danger/30 text-danger border-danger/40";
+  // Padrão visual unificado:
+  //  - Ativo  => verde
+  //  - Inativo => vermelho
+  const isActive = actuator.active;
 
-  const stateLabel = actuator.active ? actuator.activeLabel : actuator.inactiveLabel;
-  const stateColor = actuator.active
-    ? actuator.dangerWhenActive
-      ? "text-danger border-danger/30 bg-danger/10"
-      : "text-success border-success/30 bg-success/10"
-    : "text-muted-foreground border-border bg-muted/40";
+  const stateClass = isActive
+    ? "text-success border-success/40 bg-success/10"
+    : "text-danger border-danger/40 bg-danger/10";
 
-  const btnLabel = actuator.active ? actuator.toggleOffLabel : actuator.toggleOnLabel;
+  const btnClass = isActive
+    ? "bg-success/15 hover:bg-success/25 text-success border-success/40"
+    : "bg-danger/15 hover:bg-danger/25 text-danger border-danger/40";
+
+  const iconClass = isActive ? "text-success" : "text-danger";
+
+  const stateLabel = isActive ? actuator.activeLabel : actuator.inactiveLabel;
+  const btnLabel = isActive ? actuator.toggleOffLabel : actuator.toggleOnLabel;
 
   return (
     <div className="card-tech p-4 flex flex-col gap-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Icon className={cn("h-4 w-4", actuator.active && !actuator.dangerWhenActive ? "text-success" : actuator.active ? "text-danger" : "text-muted-foreground")} />
+          <Icon className={cn("h-4 w-4 transition-colors", iconClass)} />
           <h3 className="text-sm font-medium">{actuator.name}</h3>
         </div>
-        <span className={cn("text-[10px] font-semibold tracking-wider rounded-full px-2 py-0.5 border", stateColor)}>
+        <span
+          className={cn(
+            "text-[10px] font-semibold tracking-wider rounded-full px-2 py-0.5 border transition-colors",
+            stateClass,
+          )}
+        >
           {stateLabel}
         </span>
       </div>
