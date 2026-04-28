@@ -6,7 +6,7 @@ const iconFor = (id: string) => {
   if (id.includes("vent")) return Fan;
   if (id.includes("gas")) return Flame;
   if (id.includes("water") || id.includes("pump") || id.includes("bomba")) return Droplet;
-  if (id.includes("power") || id.includes("energia")) return Zap;
+  if (id.includes("power") || id.includes("energia") || id.includes("tomada")) return Zap;
   return Zap;
 };
 
@@ -20,28 +20,35 @@ export function ActuatorCard({
   disabled?: boolean;
 }) {
   const Icon = iconFor(actuator.id);
-  const danger = actuator.dangerWhenActive && actuator.active;
+  const isActive = actuator.active;
 
-  let btnClass = "bg-success/15 hover:bg-success/25 text-success border-success/30";
-  if (danger) btnClass = "bg-danger/20 hover:bg-danger/30 text-danger border-danger/40";
-
-  const stateLabel = actuator.active ? actuator.activeLabel : actuator.inactiveLabel;
-  const stateColor = actuator.active
-    ? actuator.dangerWhenActive
-      ? "text-danger border-danger/30 bg-danger/10"
-      : "text-success border-success/30 bg-success/10"
+  // Padrão visual unificado: ATIVO = verde, DESATIVADO = cinza
+  const stateBadgeClass = isActive
+    ? "text-success border-success/30 bg-success/10"
     : "text-muted-foreground border-border bg-muted/40";
 
-  const btnLabel = actuator.active ? actuator.toggleOffLabel : actuator.toggleOnLabel;
+  const iconClass = isActive ? "text-success" : "text-muted-foreground";
+
+  const btnClass = isActive
+    ? "bg-success/15 hover:bg-success/25 text-success border-success/30"
+    : "bg-muted/40 hover:bg-muted/60 text-muted-foreground border-border";
+
+  const stateLabel = isActive ? actuator.activeLabel : actuator.inactiveLabel;
+  const btnLabel = isActive ? actuator.toggleOffLabel : actuator.toggleOnLabel;
 
   return (
     <div className="card-tech p-4 flex flex-col gap-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Icon className={cn("h-4 w-4", actuator.active && !actuator.dangerWhenActive ? "text-success" : actuator.active ? "text-danger" : "text-muted-foreground")} />
+          <Icon className={cn("h-4 w-4 transition-colors", iconClass)} />
           <h3 className="text-sm font-medium">{actuator.name}</h3>
         </div>
-        <span className={cn("text-[10px] font-semibold tracking-wider rounded-full px-2 py-0.5 border", stateColor)}>
+        <span
+          className={cn(
+            "text-[10px] font-semibold tracking-wider rounded-full px-2 py-0.5 border transition-colors",
+            stateBadgeClass,
+          )}
+        >
           {stateLabel}
         </span>
       </div>
