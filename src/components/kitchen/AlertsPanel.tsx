@@ -1,8 +1,8 @@
-import type { Alert } from "@/services/api";
+import type { AlertMessage } from "@/hooks/useKitchenMonitor";
 import { AlertTriangle, ShieldAlert } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export function AlertsPanel({ alerts }: { alerts: Alert[] }) {
+export function AlertsPanel({ alerts }: { alerts: AlertMessage[] }) {
   return (
     <div className="panel p-4">
       <h2 className="text-xs font-semibold tracking-[0.2em] text-muted-foreground mb-3">

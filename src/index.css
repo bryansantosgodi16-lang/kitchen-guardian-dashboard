@@ -38,12 +38,6 @@
     --danger: 0 84% 58%;
     --danger-foreground: 0 0% 100%;
 
-    /* Cores padronizadas por tipo de sensor */
-    --sensor-heat: 14 96% 58%;       /* laranja avermelhado — calor */
-    --sensor-smoke: 220 12% 65%;     /* cinza azulado — fumaça */
-    --sensor-gas: 280 80% 65%;       /* roxo — GLP */
-    --sensor-motion: 200 95% 60%;    /* azul ciano — movimento */
-
     --border: 220 20% 16%;
     --input: 220 20% 16%;
     --ring: 152 100% 50%;

@@ -59,12 +59,6 @@ export default {
           DEFAULT: "hsl(var(--danger))",
           foreground: "hsl(var(--danger-foreground))",
         },
-        sensor: {
-          heat: "hsl(var(--sensor-heat))",
-          smoke: "hsl(var(--sensor-smoke))",
-          gas: "hsl(var(--sensor-gas))",
-          motion: "hsl(var(--sensor-motion))",
-        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

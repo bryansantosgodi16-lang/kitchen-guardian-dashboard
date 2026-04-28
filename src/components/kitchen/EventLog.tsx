@@ -1,4 +1,4 @@
-import type { EventLogEntry } from "@/services/api";
+import type { EventLogEntry } from "@/hooks/useKitchenMonitor";
 import { cn } from "@/lib/utils";
 
 const levelColor: Record<string, string> = {
@@ -9,13 +9,13 @@ const levelColor: Record<string, string> = {
 
 const typeLabel: Record<EventLogEntry["type"], string> = {
   SENSOR: "SENSOR",
-  ATUADOR: "ATUADOR",
-  SISTEMA: "SISTEMA",
-  EMERGENCIA: "EMERGÊNCIA",
-  BOMBEIROS: "BOMBEIROS",
+  ACTUATOR: "ATUADOR",
+  SYSTEM: "SISTEMA",
+  EMERGENCY: "EMERGÊNCIA",
 };
 
-const fmt = (d: string) => new Date(d).toLocaleTimeString("pt-BR", { hour12: false });
+const fmt = (d: Date) =>
+  d.toLocaleTimeString("pt-BR", { hour12: false });
 
 export function EventLog({ events }: { events: EventLogEntry[] }) {
   return (
@@ -28,33 +28,27 @@ export function EventLog({ events }: { events: EventLogEntry[] }) {
           {events.length} entradas
         </span>
       </div>
-      {events.length === 0 ? (
-        <div className="rounded-md border border-border bg-muted/20 px-3 py-8 text-center">
-          <p className="text-sm text-muted-foreground">Nenhum evento registrado</p>
-        </div>
-      ) : (
-        <div className="space-y-1.5 max-h-[320px] overflow-y-auto pr-1">
-          {events.map((e) => (
-            <div
-              key={e.id}
-              className="flex items-start gap-3 rounded-md border border-border bg-muted/20 px-3 py-2 text-xs"
+      <div className="space-y-1.5 max-h-[320px] overflow-y-auto pr-1">
+        {events.map((e) => (
+          <div
+            key={e.id}
+            className="flex items-start gap-3 rounded-md border border-border bg-muted/20 px-3 py-2 text-xs"
+          >
+            <span className="font-mono-tech text-[10px] text-muted-foreground shrink-0 pt-0.5">
+              {fmt(e.timestamp)}
+            </span>
+            <span
+              className={cn(
+                "shrink-0 rounded border px-1.5 py-0.5 text-[9px] font-semibold tracking-wider",
+                levelColor[e.level],
+              )}
             >
-              <span className="font-mono-tech text-[10px] text-muted-foreground shrink-0 pt-0.5">
-                {fmt(e.timestamp)}
-              </span>
-              <span
-                className={cn(
-                  "shrink-0 rounded border px-1.5 py-0.5 text-[9px] font-semibold tracking-wider",
-                  levelColor[e.level],
-                )}
-              >
-                {typeLabel[e.type]}
-              </span>
-              <span className="text-foreground/90 leading-snug">{e.message}</span>
-            </div>
-          ))}
-        </div>
-      )}
+              {typeLabel[e.type]}
+            </span>
+            <span className="text-foreground/90 leading-snug">{e.message}</span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
