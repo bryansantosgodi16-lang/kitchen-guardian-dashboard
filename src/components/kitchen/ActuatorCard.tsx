@@ -20,34 +20,39 @@ export function ActuatorCard({
   onToggle: (id: string) => void;
 }) {
   const Icon = iconFor(actuator.id);
-  // Button color logic:
-  // - If active: button lets user deactivate. Red if turning off a "safe ON" system (ventilation), otherwise red for stopping.
-  // - Keep the visual: green action buttons for safe activations, red for deactivation of safe systems & dangerous ones.
-  const danger = actuator.dangerWhenActive && actuator.active;
-  const safeActive = !actuator.dangerWhenActive && actuator.active;
+  const isActive = actuator.active;
 
-  let btnClass = "bg-success/15 hover:bg-success/25 text-success border-success/30";
-  if (danger) btnClass = "bg-danger/20 hover:bg-danger/30 text-danger border-danger/40";
-  else if (safeActive) btnClass = "bg-success/15 hover:bg-success/25 text-success border-success/30";
-  else if (!actuator.active) btnClass = "bg-success/15 hover:bg-success/25 text-success border-success/30";
+  // Estado: verde quando ATIVO, vermelho quando DESATIVADO
+  const stateColor = isActive
+    ? "text-success border-success/40 bg-success/10"
+    : "text-danger border-danger/40 bg-danger/10";
 
-  const stateLabel = actuator.active ? actuator.activeLabel : actuator.inactiveLabel;
-  const stateColor = actuator.active
-    ? actuator.dangerWhenActive
-      ? "text-danger border-danger/30 bg-danger/10"
-      : "text-success border-success/30 bg-success/10"
-    : "text-muted-foreground border-border bg-muted/40";
+  // Botão: mostra a ação inversa, mantendo o esquema verde (ativo) / vermelho (desativado)
+  const btnClass = isActive
+    ? "bg-danger/15 hover:bg-danger/25 text-danger border-danger/40"
+    : "bg-success/15 hover:bg-success/25 text-success border-success/40";
 
-  const btnLabel = actuator.active ? actuator.toggleOffLabel : actuator.toggleOnLabel;
+  const stateLabel = isActive ? "ATIVO" : "DESATIVADO";
+  const btnLabel = isActive ? actuator.toggleOffLabel : actuator.toggleOnLabel;
 
   return (
     <div className="card-tech p-4 flex flex-col gap-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Icon className={cn("h-4 w-4", actuator.active && !actuator.dangerWhenActive ? "text-success" : actuator.active ? "text-danger" : "text-muted-foreground")} />
+          <Icon
+            className={cn(
+              "h-4 w-4 transition-colors",
+              isActive ? "text-success" : "text-danger",
+            )}
+          />
           <h3 className="text-sm font-medium">{actuator.name}</h3>
         </div>
-        <span className={cn("text-[10px] font-semibold tracking-wider rounded-full px-2 py-0.5 border", stateColor)}>
+        <span
+          className={cn(
+            "text-[10px] font-semibold tracking-wider rounded-full px-2 py-0.5 border transition-colors",
+            stateColor,
+          )}
+        >
           {stateLabel}
         </span>
       </div>

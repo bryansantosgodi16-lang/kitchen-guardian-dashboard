@@ -27,7 +27,11 @@ export function SensorCard({ sensor }: { sensor: SensorReading }) {
 
       <div className="flex items-baseline gap-1 font-mono-tech">
         <span className="text-3xl font-semibold text-foreground">
-          {sensor.id === "gas" ? sensor.value.toFixed(2) : sensor.value.toFixed(1)}
+          {sensor.value === null
+            ? "—"
+            : sensor.id === "gas"
+              ? sensor.value.toFixed(2)
+              : sensor.value.toFixed(1)}
         </span>
         {sensor.unit && (
           <span className="text-xs text-muted-foreground uppercase tracking-wider">{sensor.unit}</span>
