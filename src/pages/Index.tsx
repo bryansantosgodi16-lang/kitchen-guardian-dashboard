@@ -122,16 +122,12 @@ const Index = () => {
         </section>
 
         {/* RODAPÉ */}
-        <footer className="panel grid grid-cols-2 md:grid-cols-4 gap-4 px-5 py-4 text-xs">
+        <footer className="panel grid grid-cols-1 md:grid-cols-3 gap-4 px-5 py-4 text-xs">
           <FooterItem label="STATUS DO SISTEMA" value={m.systemStatus} color={statusStyle.text} />
           <FooterItem label="TEMPO ATIVO" value={m.uptime} />
           <FooterItem
             label="ÚLTIMA ATUALIZAÇÃO"
             value={m.now.toLocaleTimeString("pt-BR", { hour12: false })}
-          />
-          <FooterItem
-            label="PRÓXIMA VERIFICAÇÃO"
-            value={new Date(m.now.getTime() + 60_000).toLocaleTimeString("pt-BR", { hour12: false })}
           />
         </footer>
       </main>
