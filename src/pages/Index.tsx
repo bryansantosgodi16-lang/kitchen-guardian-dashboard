@@ -41,7 +41,7 @@ const Index = () => {
             </div>
           </div>
           <div className="text-right font-mono-tech text-[11px] text-muted-foreground">
-            <div>v1.0 · Integração Arduino</div>
+            
             <div>
               {m.now.toLocaleDateString("pt-BR")}{" "}
               {m.now.toLocaleTimeString("pt-BR", { hour12: false })}
