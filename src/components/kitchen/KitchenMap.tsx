@@ -58,7 +58,11 @@ export function KitchenMap({ sensors }: { sensors: SensorReading[] }) {
                   <span className="text-[10px] text-muted-foreground">{s.name}</span>
                 </div>
                 <div className="font-mono-tech text-sm font-semibold">
-                  {s.id === "gas" ? s.value.toFixed(2) : s.value.toFixed(1)}
+                  {s.value === null
+                    ? "—"
+                    : s.id === "gas"
+                      ? s.value.toFixed(2)
+                      : s.value.toFixed(1)}
                   <span className="text-[9px] text-muted-foreground ml-1">{s.unit}</span>
                 </div>
                 <div className={cn("mt-0.5 flex items-center gap-1 text-[9px] font-semibold tracking-wider", st.text)}>
