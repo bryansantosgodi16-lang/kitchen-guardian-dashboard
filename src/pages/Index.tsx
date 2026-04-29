@@ -1,4 +1,4 @@
-import { Flame, ShieldAlert, ShieldCheck, Clock, Siren } from "lucide-react";
+import { ShieldAlert, ShieldCheck, Clock, Siren } from "lucide-react";
 import { useKitchenMonitor } from "@/hooks/useKitchenMonitor";
 import { SensorCard } from "@/components/kitchen/SensorCard";
 import { ActuatorCard } from "@/components/kitchen/ActuatorCard";
@@ -31,9 +31,6 @@ const Index = () => {
         {/* CABEÇALHO */}
         <header className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
           <div className="flex items-start gap-3">
-            <div className="h-10 w-10 rounded-lg bg-danger/15 border border-danger/30 flex items-center justify-center">
-              <Flame className="h-5 w-5 text-danger" />
-            </div>
             <div>
               <h1 className="text-2xl font-semibold tracking-tight">
                 Sistema de Segurança para Cozinha Industrial
