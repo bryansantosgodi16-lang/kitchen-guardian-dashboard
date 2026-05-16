@@ -118,33 +118,4 @@
     50% { opacity: 0.35; }
   }
   .animate-blink { animation: blink 1.2s ease-in-out infinite; }
-
-  .glass {
-    background: linear-gradient(135deg, rgba(20,30,30,0.55), rgba(10,20,20,0.35));
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(0,255,136,0.18);
-    box-shadow: 0 8px 40px rgba(0,255,136,0.08), inset 0 1px 0 rgba(255,255,255,0.04);
-  }
-  .neon-text { color: #00ff88; text-shadow: 0 0 10px rgba(0,255,136,0.7), 0 0 20px rgba(0,255,136,0.4); }
-  .neon-border { border: 1px solid rgba(0,255,136,0.4); box-shadow: 0 0 20px rgba(0,255,136,0.25), inset 0 0 20px rgba(0,255,136,0.05); }
-  .neon-btn {
-    background: linear-gradient(135deg, #00cc6a, #00ff88);
-    color: #002211;
-    box-shadow: 0 0 20px rgba(0,255,136,0.5), 0 8px 30px rgba(0,255,136,0.25);
-    transition: transform .2s, box-shadow .2s;
-  }
-  .neon-btn:hover { transform: translateY(-2px); box-shadow: 0 0 30px rgba(0,255,136,0.8), 0 12px 40px rgba(0,255,136,0.4); }
-  .neon-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-
-  @keyframes fade-up {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes particle {
-    0% { transform: translateY(100vh) translateX(0); opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { transform: translateY(-10vh) translateX(40px); opacity: 0; }
-  }
 }

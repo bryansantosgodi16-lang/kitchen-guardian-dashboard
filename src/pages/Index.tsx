@@ -1,4 +1,4 @@
-import { ShieldAlert, ShieldCheck, Clock, Siren } from "lucide-react";
+import { Flame, ShieldAlert, ShieldCheck, Clock, Siren } from "lucide-react";
 import { useKitchenMonitor } from "@/hooks/useKitchenMonitor";
 import { SensorCard } from "@/components/kitchen/SensorCard";
 import { ActuatorCard } from "@/components/kitchen/ActuatorCard";
@@ -31,6 +31,9 @@ const Index = () => {
         {/* CABEÇALHO */}
         <header className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
           <div className="flex items-start gap-3">
+            <div className="h-10 w-10 rounded-lg bg-danger/15 border border-danger/30 flex items-center justify-center">
+              <Flame className="h-5 w-5 text-danger" />
+            </div>
             <div>
               <h1 className="text-2xl font-semibold tracking-tight">
                 Sistema de Segurança para Cozinha Industrial
@@ -41,7 +44,7 @@ const Index = () => {
             </div>
           </div>
           <div className="text-right font-mono-tech text-[11px] text-muted-foreground">
-            
+            <div>v1.0 · Integração Arduino</div>
             <div>
               {m.now.toLocaleDateString("pt-BR")}{" "}
               {m.now.toLocaleTimeString("pt-BR", { hour12: false })}
@@ -122,12 +125,16 @@ const Index = () => {
         </section>
 
         {/* RODAPÉ */}
-        <footer className="panel grid grid-cols-1 md:grid-cols-3 gap-4 px-5 py-4 text-xs">
+        <footer className="panel grid grid-cols-2 md:grid-cols-4 gap-4 px-5 py-4 text-xs">
           <FooterItem label="STATUS DO SISTEMA" value={m.systemStatus} color={statusStyle.text} />
           <FooterItem label="TEMPO ATIVO" value={m.uptime} />
           <FooterItem
             label="ÚLTIMA ATUALIZAÇÃO"
             value={m.now.toLocaleTimeString("pt-BR", { hour12: false })}
+          />
+          <FooterItem
+            label="PRÓXIMA VERIFICAÇÃO"
+            value={new Date(m.now.getTime() + 60_000).toLocaleTimeString("pt-BR", { hour12: false })}
           />
         </footer>
       </main>
