@@ -161,18 +161,25 @@ export function useKitchenMonitor() {
   };
 
   const triggerEmergency = () => {
+    const motionSensor = sensors.find((s) => s.id === "motion");
+    const motionActive = motionSensor?.value !== null && (motionSensor?.value ?? 0) > 0;
+
     setActuators((prev) =>
       prev.map((a) => {
-        if (a.id === "gas_valve" || a.id === "power") return { ...a, active: false };
-        if (a.id === "vent" || a.id === "water_pump") return { ...a, active: true };
+        if (a.id === "gas_valve")   return { ...a, active: false };
+        if (a.id === "power")       return { ...a, active: false };
+        if (a.id === "vent")        return { ...a, active: true };
+        if (a.id === "water_pump")  return { ...a, active: !motionActive };
         return a;
       }),
     );
+
     pushEvent({
       type: "EMERGENCY",
       level: "danger",
-      message:
-        "BOTOEIRA DE EMERGÊNCIA ACIONADA — Gás fechado, energia desligada, ventilação e bomba ativadas",
+      message: motionActive
+        ? "EMERGÊNCIA — Gás fechado, energia desligada, ventilação ativada. Bomba BLOQUEADA (movimento detectado)"
+        : "EMERGÊNCIA — Gás fechado, energia desligada, ventilação e bomba ativadas",
     });
   };
 
