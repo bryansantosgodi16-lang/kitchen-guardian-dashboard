@@ -19,9 +19,15 @@ const Index = () => {
   const StatusIcon = statusStyle.icon;
 
   const onEmergency = () => {
+    const motionSensor = m.sensors.find((s) => s.id === "motion");
+    const motionActive = motionSensor?.value !== null && (motionSensor?.value ?? 0) > 0;
+
     m.triggerEmergency();
+
     toast.error("Botoeira de Emergência acionada", {
-      description: "Gás fechado, energia desligada, ventilação e bomba ativadas.",
+      description: motionActive
+        ? "Gás fechado, energia desligada, ventilação ativada. Bomba bloqueada — movimento detectado."
+        : "Gás fechado, energia desligada, ventilação e bomba ativadas.",
     });
   };
 
