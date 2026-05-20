@@ -137,10 +137,6 @@ const Index = () => {
             label="ÚLTIMA ATUALIZAÇÃO"
             value={m.now.toLocaleTimeString("pt-BR", { hour12: false })}
           />
-          <FooterItem
-            label="PRÓXIMA VERIFICAÇÃO"
-            value={new Date(m.now.getTime() + 60_000).toLocaleTimeString("pt-BR", { hour12: false })}
-          />
         </footer>
       </main>
     </div>
