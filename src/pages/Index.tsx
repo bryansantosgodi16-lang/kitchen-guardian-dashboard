@@ -1,15 +1,18 @@
-import { Flame, ShieldAlert, ShieldCheck, Clock, Siren } from "lucide-react";
+import { Flame, ShieldAlert, ShieldCheck, Clock, Siren, HelpCircle, Mail, MessageCircle } from "lucide-react";
+import { useState } from "react";
 import { useKitchenMonitor } from "@/hooks/useKitchenMonitor";
 import { SensorCard } from "@/components/kitchen/SensorCard";
 import { ActuatorCard } from "@/components/kitchen/ActuatorCard";
 import { KitchenMap } from "@/components/kitchen/KitchenMap";
 import { AlertsPanel } from "@/components/kitchen/AlertsPanel";
 import { EventLog } from "@/components/kitchen/EventLog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
 const Index = () => {
   const m = useKitchenMonitor();
+  const [helpOpen, setHelpOpen] = useState(false);
 
   const statusStyle = {
     NORMAL: { text: "text-success", border: "border-success/40", bg: "bg-success/10", icon: ShieldCheck, sub: "Todos os sistemas operacionais" },
@@ -87,6 +90,13 @@ const Index = () => {
           {/* Controles */}
           <div className="flex items-center justify-end gap-2">
             <button
+              onClick={() => setHelpOpen(true)}
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-bold tracking-wider bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors border border-border"
+            >
+              <HelpCircle className="h-4 w-4" />
+              CENTRAL DE AJUDA
+            </button>
+            <button
               onClick={onEmergency}
               className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-bold tracking-wider bg-danger text-danger-foreground hover:bg-danger/90 transition-colors glow-danger"
             >
@@ -139,6 +149,85 @@ const Index = () => {
           />
         </footer>
       </main>
+
+      <Dialog open={helpOpen} onOpenChange={setHelpOpen}>
+        <DialogContent className="max-w-lg max-h-[85vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <HelpCircle className="h-5 w-5 text-primary" />
+              Central de Ajuda
+            </DialogTitle>
+            <DialogDescription>
+              Tire suas dúvidas e entre em contato com nosso suporte.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-6 mt-2">
+            <section>
+              <h3 className="text-sm font-semibold tracking-wider text-muted-foreground mb-3">
+                PERGUNTAS FREQUENTES
+              </h3>
+              <div className="space-y-3">
+                <div className="rounded-lg border border-border bg-card p-3">
+                  <p className="text-sm font-medium">Como entrar em contato com o suporte?</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Você pode entrar em contato por e-mail ou WhatsApp através das informações abaixo.
+                    Nossa equipe responde em até 24 horas em dias úteis.
+                  </p>
+                </div>
+                <div className="rounded-lg border border-border bg-card p-3">
+                  <p className="text-sm font-medium">Qual o horário de atendimento?</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Atendimento de segunda a sexta-feira, das 08h às 18h.
+                    Para emergências, o sistema opera em monitoramento 24 horas.
+                  </p>
+                </div>
+                <div className="rounded-lg border border-border bg-card p-3">
+                  <p className="text-sm font-medium">Como funciona o atendimento remoto?</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Nossos técnicos acessam o sistema remotamente para diagnóstico e
+                    configuração, sem necessidade de visita presencial na maioria dos casos.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <section>
+              <h3 className="text-sm font-semibold tracking-wider text-muted-foreground mb-3">
+                INFORMAÇÕES DE CONTATO
+              </h3>
+              <div className="space-y-2">
+                <a
+                  href="mailto:suporte@empresa.com"
+                  className="flex items-center gap-3 rounded-lg border border-border bg-card p-3 hover:bg-accent transition-colors"
+                >
+                  <div className="h-9 w-9 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center">
+                    <Mail className="h-4 w-4 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground">E-mail</p>
+                    <p className="text-sm font-medium">suporte@empresa.com</p>
+                  </div>
+                </a>
+                <a
+                  href="https://wa.me/5513974152529"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 rounded-lg border border-border bg-card p-3 hover:bg-accent transition-colors"
+                >
+                  <div className="h-9 w-9 rounded-lg bg-success/10 border border-success/30 flex items-center justify-center">
+                    <MessageCircle className="h-4 w-4 text-success" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground">WhatsApp</p>
+                    <p className="text-sm font-medium">(13) 97415-2529</p>
+                  </div>
+                </a>
+              </div>
+            </section>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
