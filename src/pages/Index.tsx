@@ -1,10 +1,12 @@
-import { Flame, ShieldAlert, ShieldCheck, Clock, Siren } from "lucide-react";
+import { Flame, ShieldAlert, ShieldCheck, Clock, Siren, HelpCircle, Mail, MessageCircle } from "lucide-react";
+import { useState } from "react";
 import { useKitchenMonitor } from "@/hooks/useKitchenMonitor";
 import { SensorCard } from "@/components/kitchen/SensorCard";
 import { ActuatorCard } from "@/components/kitchen/ActuatorCard";
 import { KitchenMap } from "@/components/kitchen/KitchenMap";
 import { AlertsPanel } from "@/components/kitchen/AlertsPanel";
 import { EventLog } from "@/components/kitchen/EventLog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
