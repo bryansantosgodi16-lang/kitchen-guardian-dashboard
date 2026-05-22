@@ -90,6 +90,13 @@ const Index = () => {
           {/* Controles */}
           <div className="flex items-center justify-end gap-2">
             <button
+              onClick={() => setHelpOpen(true)}
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-bold tracking-wider bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors border border-border"
+            >
+              <HelpCircle className="h-4 w-4" />
+              CENTRAL DE AJUDA
+            </button>
+            <button
               onClick={onEmergency}
               className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-bold tracking-wider bg-danger text-danger-foreground hover:bg-danger/90 transition-colors glow-danger"
             >
