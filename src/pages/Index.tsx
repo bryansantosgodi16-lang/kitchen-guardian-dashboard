@@ -12,6 +12,7 @@ import { toast } from "sonner";
 
 const Index = () => {
   const m = useKitchenMonitor();
+  const [helpOpen, setHelpOpen] = useState(false);
 
   const statusStyle = {
     NORMAL: { text: "text-success", border: "border-success/40", bg: "bg-success/10", icon: ShieldCheck, sub: "Todos os sistemas operacionais" },
