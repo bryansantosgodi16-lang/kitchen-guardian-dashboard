@@ -149,6 +149,85 @@ const Index = () => {
           />
         </footer>
       </main>
+
+      <Dialog open={helpOpen} onOpenChange={setHelpOpen}>
+        <DialogContent className="max-w-lg max-h-[85vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <HelpCircle className="h-5 w-5 text-primary" />
+              Central de Ajuda
+            </DialogTitle>
+            <DialogDescription>
+              Tire suas dúvidas e entre em contato com nosso suporte.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-6 mt-2">
+            <section>
+              <h3 className="text-sm font-semibold tracking-wider text-muted-foreground mb-3">
+                PERGUNTAS FREQUENTES
+              </h3>
+              <div className="space-y-3">
+                <div className="rounded-lg border border-border bg-card p-3">
+                  <p className="text-sm font-medium">Como entrar em contato com o suporte?</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Você pode entrar em contato por e-mail ou WhatsApp através das informações abaixo.
+                    Nossa equipe responde em até 24 horas em dias úteis.
+                  </p>
+                </div>
+                <div className="rounded-lg border border-border bg-card p-3">
+                  <p className="text-sm font-medium">Qual o horário de atendimento?</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Atendimento de segunda a sexta-feira, das 08h às 18h.
+                    Para emergências, o sistema opera em monitoramento 24 horas.
+                  </p>
+                </div>
+                <div className="rounded-lg border border-border bg-card p-3">
+                  <p className="text-sm font-medium">Como funciona o atendimento remoto?</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Nossos técnicos acessam o sistema remotamente para diagnóstico e
+                    configuração, sem necessidade de visita presencial na maioria dos casos.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <section>
+              <h3 className="text-sm font-semibold tracking-wider text-muted-foreground mb-3">
+                INFORMAÇÕES DE CONTATO
+              </h3>
+              <div className="space-y-2">
+                <a
+                  href="mailto:suporte@empresa.com"
+                  className="flex items-center gap-3 rounded-lg border border-border bg-card p-3 hover:bg-accent transition-colors"
+                >
+                  <div className="h-9 w-9 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center">
+                    <Mail className="h-4 w-4 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground">E-mail</p>
+                    <p className="text-sm font-medium">suporte@empresa.com</p>
+                  </div>
+                </a>
+                <a
+                  href="https://wa.me/5513974152529"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 rounded-lg border border-border bg-card p-3 hover:bg-accent transition-colors"
+                >
+                  <div className="h-9 w-9 rounded-lg bg-success/10 border border-success/30 flex items-center justify-center">
+                    <MessageCircle className="h-4 w-4 text-success" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground">WhatsApp</p>
+                    <p className="text-sm font-medium">(13) 97415-2529</p>
+                  </div>
+                </a>
+              </div>
+            </section>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
